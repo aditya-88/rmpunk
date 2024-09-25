@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # This small script will find any libraries that were imported but not used in an R script/ notebook
 software <- "rmpunk"
-version <- "0.0.1-alpha"
+version <- "0.0.2-alpha"
 
 # Function to escape special characters in function names for regex
 escape_special_chars <- function(string) {
@@ -10,8 +10,13 @@ escape_special_chars <- function(string) {
 
 
 detect_unused_libraries <- function(script_path, output_path) {
+  # Check if output file exists, if so, skip
+  if (file.exists(output_path)) {
+    cat("Output file already exists, skipping cleaning\n")
+    return()
+  }
   # Read the script content
-  script_content <- readLines(script_path)
+  script_content <- suppressMessages(suppressWarnings(readLines(script_path)))
   
   # Extract all library calls
   library_calls <- grep(".*?\\s*(library|require)\\(([^)]+)\\)", script_content, value = TRUE)
@@ -56,6 +61,7 @@ detect_unused_libraries <- function(script_path, output_path) {
 }
 
 # Main function to read the script path from stdin and call the cleaning function
+cat("__________________________________________________________\n")
 cat(paste0("Welcome to ", software, " version ", version, "\n"))
 cat("RM: Remove; P: Packages; UN: Unused; K:Let's say its the K from pacKage\n\n")
 args <- commandArgs(trailingOnly = TRUE)
@@ -69,5 +75,7 @@ script_dir <- dirname(script_path)
 script_name <- basename(script_path)
 output_path <- file.path(script_dir, paste0("cleaned_", script_name))
 
-detect_unused_libraries(script_path, output_path)
-cat("Cleaned script saved to", output_path, "\n")
+prevent_msg <- detect_unused_libraries(script_path, output_path)
+cat("Cleaned script: ", output_path, "\n")
+cat(paste0("Thank you for using ", software, " version ", version, "\n"))
+cat("__________________________________________________________\n")
