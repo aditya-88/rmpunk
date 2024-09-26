@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # This small script will find any libraries that were imported but not used in an R script/ notebook
 software <- "rmpunk"
-version <- "0.0.3-alpha"
+version <- "0.0.4-alpha"
 
 escape_special_chars <- function(string) {
   gsub("([][{}()^$|*+?.\\\\])", "\\\\\\1", string)
@@ -28,7 +28,8 @@ detect_unused_libraries <- function(script_path) {
   # Extract all library calls
   library_calls <- grep(".*?\\s*(library|require)\\(([^)]+)\\)", script_content, value = TRUE)
   library_names <- gsub(".*?\\s*(library|require)\\(([^)]+)\\)", "\\2", library_calls)
-  library_names <- gsub("[^[:alnum:]]", "", library_names)
+  # Drop () or quotes if present
+  library_names <- gsub("[\"'()]", "", library_names)
   library_names <- unique(library_names)
   cat(paste0("Total libraries: ", length(library_names), "\n"))
   
@@ -36,6 +37,8 @@ detect_unused_libraries <- function(script_path) {
   used_libraries <- character()
   for (lib in library_names) {
     if (!requireNamespace(lib, quietly = TRUE)) {
+      cat(paste0("Warning: ", lib, " is not installed. Retaining unchecked!\n"))
+      used_libraries <- c(used_libraries, lib)
       next
     }
     lib_functions <- ls(getNamespace(lib), all.names = TRUE)
