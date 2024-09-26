@@ -1,5 +1,7 @@
 # rmpunk
 
+[![DOI](https://zenodo.org/badge/862924119.svg)](https://zenodo.org/doi/10.5281/zenodo.13843850)
+
 `rmpunk` is a small R script designed to find and remove any libraries that were imported but not used in an R script or R Markdown file. This helps in cleaning up your code by removing unnecessary dependencies.
 
 ## Features
