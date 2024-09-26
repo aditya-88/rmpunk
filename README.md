@@ -103,3 +103,14 @@ scripts/
 ├── script2.R
 └── script3.R
 ```
+## Limitations
+
+**Warning**
+
+**If you are sourcing packages from different `.R` file(s) into your script, these packages WILL be removed from the source file as these are not used in those files. Only use `RMPUNK` on files where you are not sourcing other files. This feature is planned for a future release.**
+
+If there are overlapping library modules and you happen to import these libraries but use only one of them, all of these packages that have an overlapping module would be retained.
+
+## To do
+
+1. Add a method to process `source` R file packages.
