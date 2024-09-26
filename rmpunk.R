@@ -58,7 +58,7 @@ detect_unused_libraries <- function(script_path) {
   for (line in script_content) {
     if (grepl(".*?\\s*(library|require)\\(([^)]+)\\)", line)) {
       lib <- gsub(".*?\\s*(library|require)\\(([^)]+)\\)", "\\2", line)
-      lib <- gsub("[^[:alnum:]]", "", lib)
+      lib <- gsub("[\"'()]", "", lib)
       if (!(lib %in% used_libraries)) {
         next
       }
