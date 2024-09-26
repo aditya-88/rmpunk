@@ -1,4 +1,4 @@
-# RMPUNK
+# rmpunk
 
 `rmpunk` is a small R script designed to find and remove any libraries that were imported but not used in an R script or R Markdown file. This helps in cleaning up your code by removing unnecessary dependencies.
 
@@ -7,13 +7,15 @@
 - Detects unused libraries in R scripts and R Markdown files.
 - Removes unused library calls from the script.
 - Outputs a cleaned version of the script.
-- Intutively skips processed files.
+- Moves the original script to a new folder named `original`.
 
 ## Installation
 
 To use `rmpunk`, you need to have R installed on your system. You can download and install R from [CRAN](https://cran.r-project.org/).
 
 ## Usage
+
+### rmpunk.R
 
 1. Clone this repository or download the `rmpunk.R` script.
 
@@ -25,7 +27,7 @@ To use `rmpunk`, you need to have R installed on your system. You can download a
 
     Replace `path/to/your_script.R` with the actual path to your R script or R Markdown file.
 
-3. The cleaned script will be saved in the same directory with the prefix `cleaned_`.
+3. The original script will be moved to a new folder named `original`, and the cleaned script will be saved in the original location with the same name.
 
 ### dirpunker.sh
 
@@ -67,7 +69,13 @@ Run RMPUNK!
 Rscript rmpunk.R example.R
 ```
 
-Output file `cleaned_example.R` saved in the input file directory
+Will move the original script to the `original` folder and produce a cleaned script example.R in the original location:
+
+```bash
+original/
+└── example.R
+example.R
+```
 
 ```r
 library(ggplot2)
@@ -96,9 +104,10 @@ Will produce cleaned scripts for each R script in the directory:
 
 ```bash
 scripts/
-├── cleaned_script1.R
-├── cleaned_script2.R
-├── cleaned_script3.R
+├── original/
+│   ├── script1.R
+│   ├── script2.R
+│   └── script3.R
 ├── script1.R
 ├── script2.R
 └── script3.R
