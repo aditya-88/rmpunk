@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # This small script will find any libraries that were imported but not used in an R script/ notebook
 software <- "rmpunk"
-version <- "0.0.4-alpha"
+version <- "0.0.5-alpha"
 
 escape_special_chars <- function(string) {
   gsub("([][{}()^$|*+?.\\\\])", "\\\\\\1", string)
