@@ -65,11 +65,15 @@ detect_unused_libraries <- function(script_path) {
   
   # Write the cleaned script to the original location with the same name
   writeLines(cleaned_script_lines, output_path)
+  # Print the removed libraries
+  cat(paste0("Removed libraries: ", paste(setdiff(library_names, used_libraries), collapse = ", "), "\n"))
 }
 
 # Main function to read the script path from stdin and call the cleaning function
-cat(paste0("Welcome to rmpunk version 0.0.1-alpha\n"))
-cat("RM: Remove; P: Packages; UN: Unused; K: Let's say it's the K from pacKage\n\n")
+cat("_______________________________________________\n")
+cat(paste0("Welcome to ", software, " version ", version, "\n"))
+cat("RM: Remove; P: Packages; UN: Unused; K: Let's say it's the K from pacKage\n")
+cat("_______________________________________________\n")
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1) {
   stop("Usage: Rscript rmpunk.R <script_path>")
@@ -78,3 +82,5 @@ if (length(args) != 1) {
 script_path <- args[1]
 detect_unused_libraries(script_path)
 cat("Cleaned script saved to", script_path, "\n")
+cat(paste0("Thank you for using ", software, " version ", version, "\n"))
+cat("_______________________________________________\n")
